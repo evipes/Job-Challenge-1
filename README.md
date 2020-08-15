@@ -41,6 +41,7 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 ## Diferenciais
 	• Uso e abuso do VueJS
 	• Documentação do código
+	• Criação de factories
 	• Testes automatizados
 	• Integrações com plataforma de terceiros (Após compra concluída, envio de e-mail com mailgun e sms com o egoi para o cliente/vendedor)
 

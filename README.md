@@ -18,10 +18,10 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 	    • Relatório
 	        - Exibir vendas dos seus produtos
 		• Produtos
-	    - Cadastrar Produto
-	    - Editar Produto
-	    - Listagem de produtos
-	    - Deletar produto
+	        - Cadastrar Produto
+	        - Editar Produto
+	        - Listagem de produtos
+	        - Deletar produto
 
 	CLIENTES:
 	    • Home

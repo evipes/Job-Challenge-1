@@ -13,31 +13,31 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 ### Dashboard
 
 	VENDEDOR:
-		• Home
-			- Listagem de compras que o vendedor realizou
-		• Relatório
-			- Exibir vendas dos seus produtos
+	    • Home
+		    - Listagem de compras que o vendedor realizou
+	    • Relatório
+	        - Exibir vendas dos seus produtos
 		• Produtos
-			- Cadastrar Produto
-			- Editar Produto
-			- Listagem de produtos
-			- Deletar produto
+	    - Cadastrar Produto
+	    - Editar Produto
+	    - Listagem de produtos
+	    - Deletar produto
 
 	CLIENTES:
-		• Home
-			- Listagem de compras que o cliente realizou.
+	    • Home
+	        - Listagem de compras que o cliente realizou.
 
 ## O que será avaliado, e diferenciais
-	Criatividade
-	Uso de boas práticas em geral
-	Segurança do código (Validações, etc)
-	Reutilização de código
-	Uso e abuso do VueJS
-	Responsividade nas telas
-	Documentação do código
-	Utilização de design patterns
-	Testes automatizados
-	Integrações com plataforma de terceiros
+	• Criatividade
+	• Uso de boas práticas em geral
+	• Segurança do código (Validações, etc)
+	• Reutilização de código
+	• Uso e abuso do VueJS
+	• Responsividade nas telas
+	• Documentação do código
+	• Utilização de design patterns
+	• Testes automatizados
+	• Integrações com plataforma de terceiros
 
 ## Regras
 	- Não será permitido utilizar templates de terceiros para desenvolvimento do projeto, mas você poderá utilizar frameworks como Bootstrap com seu visual original ou customizado por você.

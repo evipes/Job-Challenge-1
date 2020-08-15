@@ -27,17 +27,22 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 	    • Home
 	        - Listagem de compras que o cliente realizou.
 
-## O que será avaliado, e diferenciais
+### Página de venda
+	Inputs necessários: Nome, e-mail, celular, cep, rua, endereço, número, complemento, estado, número do cartão de crédito, data de segurança, cvv.
+
+## O que será avaliado
 	• Criatividade
 	• Uso de boas práticas em geral
 	• Segurança do código (Validações, etc)
 	• Reutilização de código
-	• Uso e abuso do VueJS
 	• Responsividade nas telas
-	• Documentação do código
 	• Utilização de design patterns
+
+## Diferenciais
+	• Uso e abuso do VueJS
+	• Documentação do código
 	• Testes automatizados
-	• Integrações com plataforma de terceiros
+	• Integrações com plataforma de terceiros (Após compra concluída, envio de e-mail com mailgun e sms com o egoi para o cliente/vendedor)
 
 ## Regras
 	- Não será permitido utilizar templates de terceiros para desenvolvimento do projeto, mas você poderá utilizar frameworks como Bootstrap com seu visual original ou customizado por você.

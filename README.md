@@ -14,7 +14,7 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 
 	VENDEDOR:
 	    • Home
-		    - Listagem de compras que o vendedor realizou
+	        - Listagem de compras que o vendedor realizou
 	    • Relatório
 	        - Exibir vendas dos seus produtos
 		• Produtos

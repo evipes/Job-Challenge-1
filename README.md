@@ -37,13 +37,14 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 	• Reutilização de código
 	• Responsividade nas telas
 	• Utilização de design patterns
+	• Conhecimento geral do Laravel e suas features
 
 ## Diferenciais
 	• Uso e abuso do VueJS
 	• Documentação do código
 	• Criação de factories
 	• Testes automatizados
-	• Integrações com plataforma de terceiros (Após compra concluída, envio de e-mail com mailgun e sms com o egoi para o cliente/vendedor)
+	• Integrações com plataforma de terceiros (Após compra concluída, envio de e-mail com Mailgun e sms com Egoi para o cliente/vendedor)
 
 ## Regras
 	- Não será permitido utilizar templates de terceiros para desenvolvimento do projeto, mas você poderá utilizar frameworks como Bootstrap com seu visual original ou customizado por você.

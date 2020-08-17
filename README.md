@@ -44,6 +44,7 @@ criar um produto e receber um link, que poderá divulgar e vender para clientes.
 	• Documentação do código
 	• Criação de factories
 	• Testes automatizados
+    • Código de alta performance
 	• Integrações com plataforma de terceiros (Após compra concluída, envio de e-mail com Mailgun e sms com Egoi para o cliente/vendedor)
 
 ## Regras

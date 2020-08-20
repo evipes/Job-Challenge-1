@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/checkout/{product}', 'CheckoutController@index');
+Route::get('/checkout/{product:slug}', 'CheckoutController@index');

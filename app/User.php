@@ -37,6 +37,26 @@ class User extends Authenticatable
     ];
 
     /**
+     * Retorna o endereço do usuário.
+     * 
+     * @return  \App\UserAddress
+     */
+    public function address()
+    {
+        return $this->hasOne(UserAddress::class);
+    }
+
+    /**
+     * Retorna uma lista com todos os documentos do usuário.
+     * 
+     * @return  \Illuminate\Database\Eloquent\Collection
+     */
+    public function documents()
+    {
+        return $this->hasMany(UserDocuments::class);
+    }
+
+    /**
      * Retorna uma lista com todos os produtos do usuário
      * 
      * @return  \Illuminate\Database\Eloquent\Collection

@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -36,4 +35,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Retorna uma lista com todos os produtos do usuário
+     * 
+     * @return  \Illuminate\Database\Eloquent\Collection
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Retorna uma lista com todas as compras que ele usuário realizou.
+     * 
+     * @return  Illuminate\Database\Eloquent\Collection
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

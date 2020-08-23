@@ -14,7 +14,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/checkout/{product:slug}', 'CheckoutController@index');
+
+
+
+// Clients-User
+
+    Route::get('/employee','UserController@test');
+
+
+// Vendor-Employee
+
+    Route::get('/employee','EmployeeController@test');
+
+
+// Sale
+
+    Route::get('/employee','SaleController@test');
+
+
+// Product
+

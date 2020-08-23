@@ -8,10 +8,10 @@ class CreateUserAddressesTable extends Migration
 {
     /**
      * Lista de estados do Brasil
-     * 
+     *
      * @var array
      */
-    private array $statesAllowed = [
+    private $statesAllowed = [
         "AC", "AL", "AP", "AM",
         "BA", "CE", "DF", "ES",
         "GO", "MA", "MT", "MS",

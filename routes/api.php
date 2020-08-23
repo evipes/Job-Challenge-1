@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/')->middleware('RotaProtegidaApi')->group(function () {
+
+
+    Route::get('user',      'Api\AuthController@user');
+    Route::post('logout',   'Api\AuthController@logout');
+
+
+    Route::middleware('isSeller')->get('/teste', function () {
+        return 'nada';
+    });
 });
+
+
+Route::post('auth/register',    'Api\AuthController@register');
+Route::post('auth/login',       'Api\AuthController@login');
+Route::post('auth/refresh',     'Api\AuthController@refresh');

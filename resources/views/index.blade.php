@@ -2,18 +2,19 @@
 
 <!-- Cabeçalho a ser exibido no topo da pagina -->
 @section('cabecalho')
-PAGINA PRINCIPAL 
+Olá, seja bem vindo 
 @endsection
 
 <!-- Texto descritivo abaixo do cabeçalho -->
 @section('cabecalho-descrit')
-Area de acesso principal aos gerenciamentos.
+Area de acesso principal (Index)
 @endsection
 
 <!-- CONTEUDO PRINCIAL -->
 @section('conteudo')
 
-    <a name="" id="" class="btn btn-dark mb-2" href="/" role="button">Gestão Interna</a>
-    <a name="" id="" class="btn btn-dark mb-2" href="/" role="button">Gestão de Clientes</a>
-
+    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção de vendedores</a>
+    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção para clientes</a>
+    <!-- a name="" id="" class="btn btn-dark mb-2" href="/sale" role="button">Secção aberta para produtos</a -->
+    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">New Users</a>
 @endsection

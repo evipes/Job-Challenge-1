@@ -8,7 +8,7 @@ class SaleController extends Controller
 {
     public function test (Request $request)
     {
-        return view('sale.teste');
+        return view('sale.index');
     }
     
 }

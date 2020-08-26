@@ -15,4 +15,6 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+    protected $fillable = ['slug','name','amount','user_id','created_at','updated_at'];
+
 }

@@ -15,4 +15,6 @@ class UserDocuments extends Model
     {
         return $this->belongsTo(User::class);
     }
+    protected $fillable = ['id','type','number','user_id','created_at','updated_at'];
+
 }

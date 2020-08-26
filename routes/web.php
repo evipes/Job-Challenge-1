@@ -13,8 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController@index');
 
 Route::get('/checkout/{product:slug}', 'CheckoutController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'product', 'middleware' => ['role:vendedor']], function () {
+    Route::get('/list', ['as' => 'product.list', 'uses' => 'ProductController@list']);
+    Route::post('/adicionar', ['as' => 'product.adicionar', 'uses' => 'ProductController@adicionar']);
+    Route::post('/edit', ['as' => 'product.edit', 'uses' => 'ProductController@edit']);
+    Route::post('/delete', ['as' => 'product.delete', 'uses' => 'ProductController@delete']);
+});

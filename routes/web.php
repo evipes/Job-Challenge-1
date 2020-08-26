@@ -42,3 +42,5 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
  Route::get('/login','LoginController@acessForm')
  ->name('login');
 
+ // Executa Login
+ Route::post('/login','LoginController@login');

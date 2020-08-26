@@ -13,7 +13,7 @@ Area de acesso a endedores cadastrados
 <!-- CONTEUDO PRINCIAL -->
 @section('conteudo')
 
-<p> Aqui deve vir as opções disponiveis a clientes. Como a listagem de produtos adquiridos </p>
+<p> Aqui deve vir as opções disponiveis a clientes (Como a listagem de produtos adquiridos, etc) </p>
 
 <a name="" id="" class="btn btn-dark mb-2" href="{{route('newProduct')}}" role="button"> Criar produtos</a>
 <a name="" id="" class="btn btn-dark mb-2" href="/employee" role="button"> Gerar relatorio</a>

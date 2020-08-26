@@ -16,8 +16,6 @@ Area de acesso Restrita a usuarios cadastrados. Favor entrar com login e senha
 
 <form method="post">
     @csrf
-
-
     <div class="form-group">
         <label for="email">E-mail</label>
    <input type="email" name="email" id="email" required class="form-control">
@@ -32,8 +30,9 @@ Area de acesso Restrita a usuarios cadastrados. Favor entrar com login e senha
         Entrar
     </button>
 
-<a href="{{route('create_user')}}" class="btn btn-secondary mt-3">
+<a href="{{route('newUser')}}" class="btn btn-secondary mt-3">
         Registrar-se
 </a>
+
 </form>
 @endsection

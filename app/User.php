@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -90,7 +91,7 @@ class User extends Authenticatable
             $user = self::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
-                'password'=>$request->password
+                'password'=>Hash::make($request->password)
                 ]);
                 
             $user->address()->create([
@@ -113,5 +114,6 @@ class User extends Authenticatable
         DB::commit();   
 
         $request->session()->flash('mensagem',"Obrigado {$user}, seu cadastro foi concluido com sucesso.");
+        return $user;
     }
 }

@@ -12,9 +12,7 @@ Area de acesso principal (Index)
 
 <!-- CONTEUDO PRINCIAL -->
 @section('conteudo')
-
     <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção de vendedores</a>
     <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção para clientes</a>
-    <!-- a name="" id="" class="btn btn-dark mb-2" href="/sale" role="button">Secção aberta para produtos</a -->
-    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">New Users</a>
+    <a name="" id="" class="btn btn-dark mb-2" href="{{route('newUser')}}" role="button">New Users</a>
 @endsection

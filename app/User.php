@@ -2,8 +2,11 @@
 
 namespace App;
 
+use App\Services\User\userCreator;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -74,5 +77,41 @@ class User extends Authenticatable
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    /**
+     * Metodo para criação de um novo usuario no banco de dados
+     * 
+     * @return  Illuminate\Database\Eloquent\Collection
+     */
+    public static function createUser(Request $request)
+    {
+        DB::beginTransaction();
+            $user = self::create([
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'password'=>$request->password
+                ]);
+                
+            $user->address()->create([
+                'street_name'=>$request->street_name,
+                'complement'=>$request->complement,
+                'street_number'=>(int)$request->street_number,
+                'neighborhood'=>$request->neighborhood,
+                'city'=>$request->city,
+                'state'=>$request->state
+            ]);
+
+            $user->documents()->create([
+
+                'type'=>$request->type,
+                'number'=>(int)$request->number,
+            ]);
+
+            $user->save();
+            $nameUser = $user->name;
+        DB::commit();   
+
+        $request->session()->flash('mensagem',"Obrigado {$user}, seu cadastro foi concluido com sucesso.");
     }
 }

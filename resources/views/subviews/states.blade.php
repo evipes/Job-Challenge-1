@@ -1,5 +1,4 @@
 <!-- Select com lista de estado -->
-<select class="form-control" aria-label="Default select example" id="state" name="state">
     <option selected disabled>Selecione o Estado</option>
     <option value="AC">AC</option>
     <option value="AL">AL</option>

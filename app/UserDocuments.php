@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserDocuments extends Model
 {
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'type','number',
+    ];
+    
     /**
      * Retorna o usuário dono deste documento
      * 

@@ -8,23 +8,37 @@ Route::get('/', function () {
 
 Route::get('/checkout/{product:slug}', 'CheckoutController@index');
 
-// Clients-User
 
-    # Route::get('/user','UserController@test');
+/* USER */
 
-// User
-
+    // Main view of logged users
     Route::get('/user','UserController@index');
-    
-    Route::get('/user/beginning','UserController@createProduct')
-    ->name('newUser');
 
+    // New product form
     Route::get('/user/new','UserController@createProduct')
     ->name('newProduct');
 
-// Sale
+    // Persist a new product on database
+    Route::post('/user/new','UserController@saveProduct');
+
+    // New User form
+    Route::get('/user/beginning','UserController@createUser')
+    ->name('newUser');
+
+    // Persist user on database
+    Route::post('/user/beginning','UserController@saveUser');
+
+
+/* SALES */
 
     Route::get('/sale','SaleController@test');
 
-// Product
+/* CLIENT */
+
+
+/* GENERAL */
+
+ // Formulario de login
+ Route::get('/login','LoginController@acessForm')
+ ->name('login');
 

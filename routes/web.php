@@ -16,5 +16,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any?}', function () {
     return view('welcome');
 })->where('any', '^(?!api\/)[\/\w\.-]*');
-
-Route::get('/checkout/{product:slug}', 'CheckoutController@index');

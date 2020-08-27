@@ -16,12 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->middleware('RotaProtegidaApi')->group(function () {
 
 
-    Route::get('user',      'Api\AuthController@user');
-    Route::post('logout',   'Api\AuthController@logout');
+    Route::get('auth/user',      'Api\AuthController@user');
+    Route::post('auth/logout',   'Api\AuthController@logout');
 
+    Route::middleware('isSeller')->group(function () {
+        Route::get('products',          'Api\ProductController@index');
+        Route::post('product',          'Api\ProductController@store');
+        Route::put('product/{id}',      'Api\ProductController@update');
+        Route::delete('product/{id}',   'Api\ProductController@destroy');
+        Route::put('/saler/{id}',       'API\SaleController@update');
+    });
 
-    Route::middleware('isSeller')->get('/teste', function () {
-        return 'nada';
+    Route::get('/saler', 'API\SaleController@index');
+
+    Route::middleware('isClient')->group(function () {
+        Route::put('user',      'Api\UserController@updateRole');
     });
 });
 
@@ -29,3 +38,5 @@ Route::prefix('/')->middleware('RotaProtegidaApi')->group(function () {
 Route::post('auth/register',    'Api\AuthController@register');
 Route::post('auth/login',       'Api\AuthController@login');
 Route::post('auth/refresh',     'Api\AuthController@refresh');
+Route::get('/checkout/{product:slug}', 'Api\CheckoutController@index');
+Route::post('/saler', 'API\SaleController@store');

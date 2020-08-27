@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
+    protected $fillable = [
+        'amount', 'quantity', 'status', 'installments', 'product_id', 'user_id',
+    ];
+
     /**
      * Retorna o produto da compra.
      * 

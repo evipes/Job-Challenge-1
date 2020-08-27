@@ -6,19 +6,13 @@
                     <!-- Nome do produto -->
                     <div class="form-group col-md-6">
                         <label for="name" > Nome do produto </label>
-                    <input type="text" class="form-control" name="name" id="nome" value="{{$client->name ??''}}">
+                    <input type="text" class="form-control" name="name" id="nome" >
                     </div>
     
                     <!-- Valor do produto -->
                     <div class="form-group col-md-2">
-                        <label for="market">Valor do produto</label>
-                        <input type="text" class="form-control" name="market" id="market" value="{{$client->market ??''}}">
-                    </div>
-
-                    <!-- Proprietario/User -->
-                    <div class="form-group col-md-4">
-                        <label for="name" > Proprietario </label>
-                    <input type="text" class="form-control" name="name" id="nome" value="{{$client->name ??''}}">
+                        <label for="amount">Valor do produto</label>
+                        <input type="number" class="form-control" name="amount" id="amount" min="0" step=".01" >
                     </div>
                 </div>
             </div>

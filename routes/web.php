@@ -15,11 +15,11 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
     Route::get('/user','UserController@index');
 
     // New product form
-    Route::get('/user/new','UserController@createProduct')
+    Route::get('/product/create','ProductController@createProduct')
     ->name('newProduct');
 
     // Persist a new product on database
-    Route::post('/user/new','UserController@saveProduct');
+    Route::post('/product/create','ProductController@saveProduct');
 
     // New User form
     Route::get('/user/beginning','UserController@createUser')
@@ -44,3 +44,8 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
 
  // Executa Login
  Route::post('/login','LoginController@login');
+
+
+  // Testes
+  Route::get('/teste','TesteController@testSlug')
+  ->name('teste');

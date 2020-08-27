@@ -188,7 +188,7 @@ __webpack_require__.r(__webpack_exports__);
           data: _this.form // Axios
 
         }).then(function (res) {
-          console.log(res);
+          _this.$swal("", "Registrado com sucesso!");
 
           _this.$router.push({
             name: "auth-login",

@@ -327,9 +327,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      maskCEP: "#####-###",
       carregando: true,
       pedido: false,
       salvando: false,
@@ -382,15 +384,11 @@ __webpack_require__.r(__webpack_exports__);
     buscarCep: function buscarCep() {
       var _this3 = this;
 
-      console.log(this.form.cep);
-      console.log("asdas");
-
-      if (this.form.cep.length == 8) {
+      if (this.form.cep.length > 7) {
         axios.get("https://viacep.com.br/ws/" + this.form.cep + "/json/").then(function (res) {
-          _this3.form.street = res.logradouro;
-          _this3.form.city = res.localidade;
-          _this3.form.neighborhood = res.bairro;
-          console.log(res);
+          _this3.form.street = res.data.logradouro;
+          _this3.form.city = res.data.localidade;
+          _this3.form.neighborhood = res.data.bairro;
         })["catch"](function (e) {
           console.log(e);
         });
@@ -530,25 +528,14 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-8" }, [
+              _c("div", { staticClass: "col-7" }, [
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
                     _vm._m(1),
                     _vm._v(" "),
                     _c("tbody", [
                       _c("tr", [
-                        _c("th", [
-                          _c(
-                            "span",
-                            { staticClass: "h4 text-white text-center" },
-                            [
-                              _vm._v(
-                                "\n                          Descrição:\n                          "
-                              ),
-                              _c("b", [_vm._v(_vm._s(_vm.produto.name))])
-                            ]
-                          )
-                        ]),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c("th", [
                           _c(
@@ -576,10 +563,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "col-5" }, [
                 _c("div", { staticClass: "table-responsive" }, [
                   _c("table", { staticClass: "table" }, [
-                    _vm._m(2),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("tbody", [
                       _c("tr", [
@@ -789,7 +776,21 @@ var render = function() {
                                   _vm._v("CEP")
                                 ]),
                                 _vm._v(" "),
-                                _c("vue-mask", {
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "mask",
+                                      rawName: "v-mask",
+                                      value: _vm.maskCEP,
+                                      expression: "maskCEP"
+                                    },
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.cep,
+                                      expression: "form.cep"
+                                    }
+                                  ],
                                   staticClass: "form-control t-input",
                                   class: {
                                     "is-invalid": _vm.form.errors.has("cep")
@@ -797,20 +798,23 @@ var render = function() {
                                   attrs: {
                                     type: "text",
                                     id: "cep",
-                                    mask: "00000-000",
                                     required: ""
                                   },
+                                  domProps: { value: _vm.form.cep },
                                   on: {
                                     keyup: function($event) {
                                       return _vm.buscarCep()
-                                    }
-                                  },
-                                  model: {
-                                    value: _vm.form.cep,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.form, "cep", $$v)
                                     },
-                                    expression: "form.cep"
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.form,
+                                        "cep",
+                                        $event.target.value
+                                      )
+                                    }
                                   }
                                 }),
                                 _vm._v(" "),
@@ -1209,7 +1213,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _vm._m(3),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -1280,7 +1284,7 @@ var render = function() {
                 ],
                 staticClass: "row"
               },
-              [_vm._m(4)]
+              [_vm._m(5)]
             )
           ])
         ])
@@ -1365,6 +1369,18 @@ var staticRenderFns = [
           "th",
           { staticClass: "h2 text-white text-center", attrs: { colspan: "2" } },
           [_vm._v("PRODUTO")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("span", { staticClass: "h4 text-white text-center" }, [
+        _vm._v(
+          "\n                          Descrição:\n                          \n                        "
         )
       ])
     ])

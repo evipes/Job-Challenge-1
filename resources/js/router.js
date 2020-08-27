@@ -75,6 +75,10 @@ const routes = [
     {
         path: "/404",
         redirect: { name: 'painel' }
+    },
+    {
+        path: "/login",
+        redirect: { name: 'auth-login' }
     }
 ];
 

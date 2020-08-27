@@ -6,17 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
-use App\Sale;
-use App\User;
-use App\Product;
-use App\UserAddress;
-use App\UserDocuments;
+use App\Interfaces\ISale;
+use App\Interfaces\IUser;
+use App\Interfaces\IProduct;
+use App\Interfaces\IUserAddress;
 use Illuminate\Http\Request;
 
 use Mail;
 
 class SaleController extends Controller
 {
+    protected $productService;
+    protected $userService;
+    protected $saleService;
+    protected $userAddressService;
+
+    public function __construct(IProduct $p, IUser $u, ISale $s, IUserAddress $uA) {
+        $this->productService = $p;
+        $this->userService = $u;
+        $this->saleService = $s;
+        $this->userAddressService = $uA;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,22 +34,8 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $vendas = Sale::with('user', 'product.user')
-        ->join('products', function ($join) {
-            $join->on('sales.product_id', '=', 'products.id')
-                 ->where('products.user_id', '=', Auth::user()->id);
-        })
-        ->select('sales.*')
-        ->get();
-
-
-        $compras = Sale::with('user', 'product.user')
-        ->join('users', function ($join) {
-            $join->on('sales.user_id', '=', 'users.id')
-                 ->where('sales.user_id', '=', Auth::user()->id);
-        })
-        ->select('sales.*')
-        ->get();
+        $vendas =  $this->saleService->buscarVendasUserLogado();
+        $compras = $this->saleService->buscarComprasUserLogado();
 
         return response()->json([
             'status' => 'success',
@@ -76,45 +72,26 @@ class SaleController extends Controller
             return response()->json($validar->errors(), 422);
         }
 
-        $produtos = Product::find($request->product_id);
+        $produtos = $this->productService->buscarPorId($request->product_id);
 
         if ($produtos == null) {
             return response()->json(['message' => 'Produto não encontrado.'], 404);
         }
 
         //verficar se o usuário já existe por email
-        $user = User::where('email', $request->email)->first();
-        $vendedor = User::where('id', $produtos->user_id)->first();
-        $senha = 0;
+        $user       = $this->userService->buscarPorEmail($request->email)->first();
+        $vendedor   = $this->userService->buscarPorId($produtos->user_id);
+        $senha      = 0;
+       
        if(!$user) {
-        $senha = rand(100000,999999);
-            $user = User::create([
-                'password' => bcrypt($senha),
-                'name' => $request->name,
-                'email' => $request->email,
-                'role' => 'client'
-            ]);
+            $senha = rand(100000,999999);
+            $user = $this->userService->criarUsuario($request->name, $senha, $request->email, 'client');
             //Enviar Email de criação de conta
             $this->EnviarMail("Sua conta foi criada, sua senha é $senha", $request->email, "Conta criada!");
         }
 
-        UserAddress::updateOrCreate([
-            'street_name' => $request->street,
-            'street_number' => $request->number,
-            'neighborhood' => $request->neighborhood,
-            'city' => $request->city,
-            'state' => $request->state,
-            'user_id' => $user->id
-            ]);
-
-        Sale::create([
-            'amount' => $produtos->amount,
-            'quantity' => 1,
-            'status' => 'pending',
-            'installments' => 1,
-            'product_id' => $request->product_id,
-            'user_id' => $user->id
-        ]);
+        $this->userAddressService->criarOuAtualizar($request->street, $request->number, $request->neighborhood, $request->city, $request->state, $user->id);
+        $this->saleService->criarSale($produtos->amount, $request->product_id, $user->id);
 
         //enviar email do pedido
         $this->EnviarMail("Compra realizada com sucesso!", $request->email, "Compra realizada!");
@@ -132,7 +109,6 @@ class SaleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -144,12 +120,8 @@ class SaleController extends Controller
         if ($validar->fails()) {
             return response()->json($validar->errors(), 422);
         }
-        $dado = Sale::join('products', function ($join) {
-                    $join->on('sales.product_id', '=', 'products.id')
-                        ->where('products.user_id', '=', Auth::user()->id);
-                })
-                ->where('sales.id', '=', $id)
-                ->select('sales.*');
+
+        $dado = $this->saleService->buscarVendaPorIdUserLogado($id);
 
         if ($dado->first() == null) {
             return response()->json(['message' => 'Não existe'], 422);
@@ -167,7 +139,7 @@ class SaleController extends Controller
     {
         Mail::send('email', ['msg' => $msg], 
         function($message) use ($to, $title) {
-            $message->from('daniel@daniel.com', 'DANIEL LUCAS');
+            $message->from('contato@evipes.com', 'EQUIPE EVIPES');
             $message->to($to)
             ->subject($title);
         });

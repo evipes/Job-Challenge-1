@@ -177,7 +177,7 @@ export default {
                     })
                     .then(
                         res => {
-                            console.log(res);
+                            this.$swal("", "Registrado com sucesso!");
                             this.$router.push({
                                 name: "auth-login",
                                 params: { successRegistrationRedirect: true }

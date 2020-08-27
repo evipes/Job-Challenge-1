@@ -27,6 +27,7 @@
         "@websanova/vue-auth": "^3.3.0",
         "es6-promise": "^4.2.8",
         "moment": "^2.27.0",
+        "v-mask": "^2.2.3",
         "vform": "^1.0.1",
         "vue-axios": "^2.1.5",
         "vue-jquery-mask": "^1.0.4",

@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        App\Providers\UserServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -174,6 +173,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\UserServiceProvider::class,
+        App\Providers\ProductServiceProvider::class,
+        App\Providers\SaleServiceProvider::class,
+        App\Providers\UserAddressServiceProvider::class,
 
     ],
 

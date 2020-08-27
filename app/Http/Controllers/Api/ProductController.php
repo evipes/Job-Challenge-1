@@ -4,12 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Product;
+use App\Interfaces\IProduct;
 use Validator;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(IProduct $p) {
+        $this->productService = $p;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $produtos = Product::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
+        $produtos = $this->productService->buscarProdutosUsuarioLogado()->get();
         return response()->json([
             'status' => 'success',
             'produtos' => $produtos
@@ -36,32 +41,14 @@ class ProductController extends Controller
             'name' => 'required',
             'amount' => 'required',
         ]);
-
         if ($validar->fails()) {
             return response()->json($validar->errors(), 422);
         }
-
-        $produto = new Product([
-            'name' => $request->name,
-            'amount' => $request->amount,
-            'user_id' => Auth::user()->id
-        ]);
-        $produto->save();
+        $produto = $this->productService->criarProduto($request->name, $request->amount);
         return response()->json([
             'status' => 'success',
             'produto' => $produto
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
     }
 
     /**
@@ -81,7 +68,8 @@ class ProductController extends Controller
         if ($validar->fails()) {
             return response()->json($validar->errors(), 422);
         }
-        $produto = Product::where(['id' => $id, 'user_id' => Auth::user()->id]);
+        
+        $produto = $this->productService->buscarProdutoPorIdUsuarioLogado($id);
 
         if ($produto->get() == null) {
             return response()->json(['message' => 'Produto não existe'], 422);
@@ -101,12 +89,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $produto = Product::where(['id' => $id, 'user_id' => Auth::user()->id]);
-
+        $produto = $this->productService->buscarProdutoPorIdUsuarioLogado($id);
         if ($produto->get() == null) {
             return response()->json(['message' => 'Produto não existe'], 422);
         }
-
         $produto->delete();
         return response()->json([
             'status' => 'success'

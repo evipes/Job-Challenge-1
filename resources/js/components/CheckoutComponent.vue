@@ -23,7 +23,7 @@
 
         <div class="justify-content-center" v-show="!carregando">
           <div class="row">
-            <div class="col-8">
+            <div class="col-7">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -36,7 +36,7 @@
                       <th>
                         <span class="h4 text-white text-center">
                           Descrição:
-                          <b>{{ produto.name }}</b>
+                          
                         </span>
                       </th>
                       <th>
@@ -55,7 +55,7 @@
                 </table>
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-5">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -136,14 +136,15 @@
 
                       <div class="form-group">
                         <label for="CEP">CEP</label>
-                        <vue-mask
+                        <input 
                           type="text"
                           v-on:keyup="buscarCep()"
                           class="form-control t-input"
                           id="cep"
-                          mask="00000-000"
+                          v-mask="maskCEP"
                           required
                           v-model="form.cep"
+                          
                           :class="{'is-invalid': form.errors.has('cep')}"
                         />
                         <has-error :form="form" field="cep"></has-error>
@@ -320,6 +321,7 @@
 export default {
   data() {
     return {
+      maskCEP: "#####-###",
       carregando: true,
       pedido: false,
       salvando: false,
@@ -371,16 +373,14 @@ export default {
         });
     },
     buscarCep() {
-      console.log(this.form.cep);
-      console.log("asdas");
-      if (this.form.cep.length == 8) {
+      
+      if (this.form.cep.length > 7) {
         axios
           .get("https://viacep.com.br/ws/" + this.form.cep + "/json/")
           .then((res) => {
-            this.form.street = res.logradouro;
-            this.form.city = res.localidade;
-            this.form.neighborhood = res.bairro;
-            console.log(res);
+            this.form.street = res.data.logradouro;
+            this.form.city = res.data.localidade;
+            this.form.neighborhood = res.data.bairro;
           })
           .catch((e) => {
             console.log(e);

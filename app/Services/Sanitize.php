@@ -18,8 +18,6 @@ class Sanitize
         $str = preg_replace('/[^a-z0-9]/i', '_', $str);
         $str = preg_replace('/_+/', '_', $str); // ideia do Bacco :)
         return $str;
-
-
     }
     
 }

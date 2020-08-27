@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,9 +15,11 @@ class UserController extends Controller
      * @param   void
      * @return  \Illuminate\View\View
      */
-    public function index ()
+    public function index (Request $request )
     {
-        return view('user.index');
+        $id = Auth::user()->id;
+        $products = Product::listProduct($id);
+        return view('user.index', compact('products'));
     }
     
     /**

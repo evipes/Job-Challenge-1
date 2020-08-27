@@ -2,12 +2,12 @@
 
 <!-- Cabeçalho a ser exibido no topo da pagina -->
 @section('cabecalho')
-    NOVO PRODUTO
+    Produtos
 @endsection
 
 <!-- Texto descritivo abaixo do cabeçalho -->
 @section('cabecalho-descrit')
-    Cadastro de novo produto na base de dados
+    Produto criado com sucesso
 @endsection
 
 <!-- CONTEUDO PRINCIAL -->
@@ -15,8 +15,8 @@
 
     <!-- Exibir erros (pendente e pre-alocado) -->
 
-    
+  <p>PRODUTO CRIADO COM SUCESSO. COLOCAR AQUI O SLUG </p>  
     <!-- Formulario para adicionar produtos -->
-    @include('product.product')
+  
 
 @endsection

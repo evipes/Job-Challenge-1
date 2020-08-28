@@ -18,7 +18,7 @@
 <body>
     <!-- Navbar -->
     <nav id="navbar-example2" class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Evipes</a>
+        <a class="navbar-brand" href="{{route('home')}}">Evipes</a>
         <ul class="nav nav-pills ">
             @guest
             @if (Route::has('register'))

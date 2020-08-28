@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\UserDocuments;
-    
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+
 
 class RegisterController extends Controller
 {
@@ -52,13 +54,16 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'cpf' => ['nullable', Rule::requiredIf($data['type'] == 'cpf'), 'cpf'],
             'cnpj' => ['nullable', Rule::requiredIf($data['type'] == 'cnpj'), 'cnpj'],
+           
         ]);
+
+        return $validator;
     }
 
     /**
@@ -82,10 +87,15 @@ class RegisterController extends Controller
             'number' => isset($data['cpf']) ? $data['cpf'] : $data['cnpj'],
             'user_id' => $user->id,
         ]);
-        // Definindo papel do usuário
-        $user->assignRole('vendedor');
-
-        // Retornando usuário
-        return $user;
+     
+            // Definindo papel do usuário
+            $user->assignRole('vendedor');
+            // Retornando usuário
+            return $user;
+        
     }
+    
+    public function showRegistrationForm($codigo=''){
+        return view('auth.register');
+    }   
 }

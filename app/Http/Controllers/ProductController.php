@@ -28,7 +28,7 @@ class ProductController extends Controller
     // Listar produtos
     public function list()
     {
-        $product = Product::get();
+        $product = Product::where('user_id',Auth::user()->id)->get();
         return datatables()->of($product)
             ->editColumn('acoes', function ($product) {
                 return $this->setDataButtons($product);

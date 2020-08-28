@@ -4,14 +4,16 @@
 <div class="container ">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            
+
             <div class="card">
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="row justify-content-center">
-                            <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            <a href="{{route('home')}}">
+                                <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            </a>
                         </div>
                         <div class="form-group ">
                             <label for="email" class="col-md-12 col-form-label">{{ __('Email') }}</label>

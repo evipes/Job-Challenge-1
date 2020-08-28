@@ -16,7 +16,9 @@
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
                         <div class="row justify-content-center">
-                            <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            <a href="{{route('home')}}">
+                                <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            </a>
                         </div>
 
                         <div class="form-group row mt-20">

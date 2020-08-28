@@ -25,4 +25,7 @@ class Sale extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = ['id','amount','quantity','status','installments','product_id','user_id','created_at','updated_at'];
+
 }

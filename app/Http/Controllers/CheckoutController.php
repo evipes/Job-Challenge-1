@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\UserAddress;
+use App\UserDocuments;
+use App\Sale;
+use League\CommonMark\Block\Element\Document;
+
+use function GuzzleHttp\Promise\all;
 
 class CheckoutController extends Controller
 {
@@ -17,4 +26,6 @@ class CheckoutController extends Controller
     {
         return view('checkouts.simple', compact('product'));
     }
+
+  
 }

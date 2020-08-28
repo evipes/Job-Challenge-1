@@ -10,7 +10,9 @@
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
                         <div class="row justify-content-center">
-                            <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            <a href="{{route('home')}}">
+                                <span><img src="{{URL::asset('assets/images/logo.png')}}" alt="Logo evipes"></span>
+                            </a>
                         </div>
                         <input type="hidden" name="token" value="{{ $token }}">
 

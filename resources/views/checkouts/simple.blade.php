@@ -16,6 +16,8 @@
 
 <body>
   @include('subviews.navbar')
+  <form method="POST">
+  @csrf
     <div id="root" class="d-flex justify-content-center align-content-center">
 
         <div class="card mt-2">
@@ -90,11 +92,14 @@
                       <input type="password" class="form-control" id="cardcvv">
                     </div>
                   </div>
-                <a href="route{{}}" class="btn btn-primary">Comprar!</a>
+
+                  <button class="btn btn-primary mt-2">Comprar!</button>
+                
+
             </div>
         </div>
-
     </div>
+  </form>
 
     <!-- Outside CDN Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

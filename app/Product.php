@@ -131,5 +131,12 @@ class Product extends Model
         return $deleted_product;
     }
 
+    public static function soldProducts(Int $user_id)
+    {
+        $user = User::find($user_id);
+        $products = $user->products->where('sold','>',0)->all();
+        return $products;
+    
+    }
 
 }

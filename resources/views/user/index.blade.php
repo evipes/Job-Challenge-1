@@ -15,10 +15,10 @@ Area de acesso a endedores cadastrados
 
 <a name="" id="" class="btn btn-dark mb-2" href="{{route('newProduct')}}" role="button"> Criar produtos</a>
 
-<a name="" id="" class="btn btn-dark mb-2" href="/employee" role="button"> Relatorio de vendas</a>
+<a name="" id="" class="btn btn-dark mb-2" href="{{route('listSales')}}" role="button"> Relatorio de vendas</a>
 
 
-   <!--  Impressão da lista de cliente  -->
+   <!--  Impressão da lista de produtos  -->
 <ul class="list-group">
     @foreach($products as $product)
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -29,16 +29,14 @@ Area de acesso a endedores cadastrados
             <span class="d-flex">
 
                 <!-- icon: editar produto -->                   
-                <a href="{{ route('edit_product', array('id'=>$product->id))}}" class="btn btn-info btn-sm mr-1">
-                    <i class="fas fa-pencil-alt"></i>
-                </a>
-                
-               <!-- icon: abrir produto -->                   
-                <a href="{{ route('edit_product', array('id'=>$product->id))}}" class="btn btn-info btn-sm mr-1">
+                <a href="{{ route('listProductSales', array('id'=>$product->id))}}" class="btn btn-info btn-sm mr-1">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-
-
+                
+               <!-- icon: relatorio do produto -->                   
+                <a href="{{ route('edit_product', array('id'=>$product->id))}}" class="btn btn-info btn-sm mr-1">
+                    <i class="fas fa-pencil-alt"></i>                    
+                </a>
 
                 @auth
                 <!-- icon: deletar produtos-->   

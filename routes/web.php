@@ -49,7 +49,21 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
 /* SALES */
 
     //Buy a product
-    Route::post('/sale','SaleController@test');
+   # Route::post('/sale','SaleController@test');
+
+    Route::post('/checkout/{product:slug}','SaleController@sell')
+    ->name('checkout_sale');
+
+    // List de User sales done
+    Route::get('/user/allsales','SaleController@allSales')
+    ->name('listSales')
+    ->middleware('LoggedUser');
+
+    // List de User sales done
+    Route::get('/user/sales','SaleController@productSales')
+    ->name('listProductSales')
+    ->middleware('LoggedUser');
+
 
 /* CLIENT */
 

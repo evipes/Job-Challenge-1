@@ -12,7 +12,6 @@ Area de acesso principal (Index)
 
 <!-- CONTEUDO PRINCIAL -->
 @section('conteudo')
-    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção de vendedores</a>
-    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Secção para clientes</a>
-
+    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Seus Produtos</a>
+    <a name="" id="" class="btn btn-dark mb-2" href="/user" role="button">Suas Compras</a>
 @endsection

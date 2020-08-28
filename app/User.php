@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -81,9 +82,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Metodo para criação de um novo usuario no banco de dados
+     * Store a new user on database
      * 
-     * @return  Illuminate\Database\Eloquent\Collection
+     * @param   \Illuminate\Http\Request    $request
+     * @return  string  $user
      */
     public static function createUser(Request $request)
     {
@@ -116,4 +118,25 @@ class User extends Authenticatable
         $request->session()->flash('mensagem',"Obrigado {$user}, seu cadastro foi concluido com sucesso.");
         return $user;
     }
+
+    /**
+     * Soft-Destroy a user from database
+     * 
+     * @param  \Illuminate\Http\Request    $request
+     * @return  string  $userName
+     */
+    public static function destroyUser($id)
+    {
+
+        $user = User::find($id);
+        DB::beginTransaction();
+
+            $userName = $user->name;
+            $user->delete();
+            
+        DB::commit();   
+
+        return $userName;
+    }
+
 }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -54,7 +54,6 @@ class Product extends Model
         DB::commit();
         $request->session()->flash('mensagem',"Produto {$request->name} criado com sucesso");
     }
-
 
     /**
      * This function create a slug string to products
@@ -118,18 +117,18 @@ class Product extends Model
     /**
      * This function returns a list of products of a logged user
      * 
-     * @param   \Illuminate\Http\Request    $request
-     * @return  \App\Product
+     * @param   int     $id
+     * @return  string  $deleted_product
      */
     public static function destroyProduct($id)
     {
         $product = Product::find($id);
         DB::beginTransaction();
-        $name= $product->name;
+        $deleted_product= $product->name;
             $product->delete();
         DB::commit();
 
-        return $name;
+        return $deleted_product;
     }
 
 

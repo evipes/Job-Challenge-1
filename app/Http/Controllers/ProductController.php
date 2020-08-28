@@ -25,7 +25,7 @@ class ProductController extends Controller
      * This store a new product on DB
      * 
      * @param   \Illuminate\Http\Request    $request
-     * @return  void
+     * @return  \Illuminate\Http\RedirectResponse
      */
     public function storeProduct(Request $request)
     {   
@@ -38,7 +38,7 @@ class ProductController extends Controller
      * This method edit an already saved product
      * 
      * @param   \Illuminate\Http\Request    $request
-     * @return  void
+     * @return  @return  \Illuminate\Http\RedirectResponse
      */
     public function saveProduct(Request $request)
     {   
@@ -52,7 +52,7 @@ class ProductController extends Controller
      * This methods redircts you to a edit-form of a product
      * 
      * @param   \Illuminate\Http\Request    $request
-     * @return  void
+     * @return  \Illuminate\View\View
      */
     public function editProduct(Request $request)
     {   
@@ -65,15 +65,17 @@ class ProductController extends Controller
     /**
      * This method destrou a product from database
      * 
+     * @param   \Illuminate\Http\Request
+     * @return  \Illuminate\Http\RedirectResponse
      */
     public function destroyProduct(Request $request)
     {
-        $id = $request->id_product;
+        $id = $request->id;
         $deleted = Product::destroyProduct($id);
         $request->session()->flash('mensagem',"O produto {$deleted} foi excluido com sucesso");
+
         $products = Product::listProduct(Auth::user()->id);
-        return view('user.index', compact('products'));
-        
+        return redirect()->route('userHome');        
     }
 
 }

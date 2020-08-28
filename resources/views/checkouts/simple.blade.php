@@ -10,15 +10,17 @@
     <!-- Outside CDN Stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/main.css') }}">
 </head>
 
 <body>
-
+  @include('subviews.navbar')
     <div id="root" class="d-flex justify-content-center align-content-center">
 
         <div class="card mt-2">
             <div class="card-header">
-                Produto X • R$ 0,00
+                {{$product->name}} • R$ {{$product->amount}}
             </div>
             <div class="card-body" style="min-width: 30em">
                 <h4>1. Dados pessoais</h4>
@@ -88,7 +90,7 @@
                       <input type="password" class="form-control" id="cardcvv">
                     </div>
                   </div>
-                <a href="#" class="btn btn-primary">Comprar!</a>
+                <a href="route{{}}" class="btn btn-primary">Comprar!</a>
             </div>
         </div>
 

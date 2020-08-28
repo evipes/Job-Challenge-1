@@ -12,37 +12,44 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
 
     // Main view of logged users
     Route::get('/user','UserController@index')
-    ->name('userHome');
+    ->name('userHome')
+    ->middleware('LoggedUser');
 
 /* PRODUCTS */
 
     // New product form
     Route::get('/product/create','ProductController@createProduct')
-    ->name('newProduct');
+    ->name('newProduct')
+    ->middleware('LoggedUser');
 
     // Persist a new product on database
-    Route::post('/product/create','ProductController@storeProduct');
+    Route::post('/product/create','ProductController@storeProduct')
+    ->middleware('LoggedUser');
 
     // Edit a product
     Route::get('/product/edit/{id}','ProductController@editProduct')
-    ->name('edit_product');
+    ->name('edit_product')
+    ->middleware('LoggedUser');
 
     // Save a product edition
     Route::post('/product/edit/{id}','ProductController@saveProduct')
-    ->name('save_product');
+    ->name('save_product')
+    ->middleware('LoggedUser');
 
     // Show a resume about the product and the salles
     Route::get('/product/stats','ProductController@statsProduct')
-    ->name('stats_product');
+    ->name('stats_product')
+    ->middleware('LoggedUser');
 
     // Destroy a product from database
     Route::delete('/product/destroy','ProductController@destroyProduct')
-    ->name('destroy_product');
+    ->name('destroy_product')
+    ->middleware('LoggedUser');
 
 /* SALES */
 
     //Buy a product
-    Route::get('/sale','SaleController@test');
+    Route::post('/sale','SaleController@test');
 
 /* CLIENT */
 
@@ -63,7 +70,6 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
     // New User persist
     Route::post('/login/create','RegisterController@store')
     ->name('newUser');
-
-    // Testes
-    Route::get('/teste','TesteController@testSlug')
-    ->name('teste');
+    
+     // Logout
+     Route::get('/logout','LoginController@logout');  

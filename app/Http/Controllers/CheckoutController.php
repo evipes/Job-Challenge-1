@@ -15,6 +15,6 @@ class CheckoutController extends Controller
      */
     public function index(Product $product)
     {
-        return view('checkouts.simple');
+        return view('checkouts.simple',compact('product'));
     }
 }

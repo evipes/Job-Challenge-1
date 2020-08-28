@@ -13,8 +13,8 @@
 <!-- CONTEUDO PRINCIAL -->
 @section('conteudo')
 
-    <!-- Exibir erros (pendente e pre-alocado) -->
-
+    <!-- Exibir erros -->
+    @include('subviews.responseError',['errors'=>$errors])
     
     <!-- Formulario para adicionar produtos -->
     @include('user.newUser')

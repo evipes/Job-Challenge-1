@@ -44,7 +44,7 @@ class Sale extends Model
     }
 
     /**
-     * This function perform a sale
+     * Função para realizar uma venda
      * 
      * @param   \Illuminate\Http\Request    $request
      * @return  void

@@ -93,10 +93,10 @@ class Product extends Model
     }
 
     /**
-     * This function returns a list of products of a logged user
+     * Edit a product on Database
      * 
      * @param   \Illuminate\Http\Request    $request
-     * @return  \App\Product
+     * @return  string
      */
     public static function editProduct(Request $request)
     {
@@ -114,7 +114,7 @@ class Product extends Model
     }
 
     /**
-     * This function returns a list of products of a logged user
+     * Delete a product on Database
      * 
      * @param   int     $id
      * @return  string  $deleted_product
@@ -130,6 +130,12 @@ class Product extends Model
         return $deleted_product;
     }
 
+    /**
+     * Retorna uma lista de produtos vendidos pelo usuario
+     * 
+     * @param   int     $id
+     * @return  string  $deleted_product
+     */
     public static function soldProducts(Int $user_id)
     {
         $user = User::find($user_id);

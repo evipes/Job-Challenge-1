@@ -18,6 +18,11 @@ class SaleController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Retorna as VENDAS realizados por determinado usuario
+     * 
+     * 
+     */
     public function allSales (Request $request)
     {
         $id = Auth::user()->id;
@@ -25,6 +30,10 @@ class SaleController extends Controller
         return view('user.list-sales', compact('products'));
     }
 
+    /**
+     * Retorna uma lista de vendas de um determinado produto por determinado usuario
+     * 
+     */
     public function productSales (Request $request)
     {
         $product_id = (int) $request->id;

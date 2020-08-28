@@ -46,6 +46,12 @@ class UserController extends Controller
         redirect(route('login'));
     }
 
+    /**
+     * Este metodo retorna uma lista de COMPRAS feitas pelo usuario
+     * 
+     * @param   \Illuminate\Http\Request    $request
+     * @return  \Illuminate\View\View
+     */
     public function myBuyers(Request $request)
     {
         $id = Auth::user()->id;

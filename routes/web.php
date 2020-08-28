@@ -6,13 +6,20 @@ Route::get('/', function () {
     return view('index');
 });
 
+#route de acesso ao cliente
 Route::get('/checkout/{product:slug}', 'CheckoutController@index');
+
 
 /* USER */
 
     // Main view of logged users
     Route::get('/user','UserController@index')
     ->name('userHome')
+    ->middleware('LoggedUser');
+
+    // list of evething buyed
+    Route::get('/user/myList','UserController@myBuyers')
+    ->name('listBuyers')
     ->middleware('LoggedUser');
 
 /* PRODUCTS */
@@ -52,7 +59,8 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
    # Route::post('/sale','SaleController@test');
 
     Route::post('/checkout/{product:slug}','SaleController@sell')
-    ->name('checkout_sale');
+    ->name('checkout_sale')
+    ->middleware('LoggedUser');
 
     // List de User sales done
     Route::get('/user/allsales','SaleController@allSales')
@@ -63,9 +71,6 @@ Route::get('/checkout/{product:slug}', 'CheckoutController@index');
     Route::get('/user/sales','SaleController@productSales')
     ->name('listProductSales')
     ->middleware('LoggedUser');
-
-
-/* CLIENT */
 
 
 /* GENERAL */

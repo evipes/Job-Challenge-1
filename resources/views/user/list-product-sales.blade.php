@@ -16,7 +16,8 @@ Area de acesso a endedores cadastrados
 <a name="" id="" class="btn btn-dark mb-2" href="{{route('newProduct')}}" role="button"> Criar produtos</a>
 
    <!--  Impressão da lista de cliente  -->
-   <p> Seu icone de acesso para vendas: </p>
+   <p> Seu icone de acesso para vendas é: { {{url('checkout/'.$slug)}} }</p>
+  
 <ul class="list-group">
     @foreach($buyers as $key=>$buyer)
         <li class="list-group-item d-flex justify-content-between align-items-center">

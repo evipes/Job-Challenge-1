@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Sale;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -42,8 +43,19 @@ class UserController extends Controller
     public function saveUser(Request $request)
     {
         User::createUser($request);
-        
         redirect(route('login'));
+    }
+
+    public function myBuyers(Request $request)
+    {
+        $id = Auth::user()->id;
+        $sales = Sale::where('user_id',$id)->get();
+        $product = [];
+        foreach ($sales as $sale){
+            $product[]= Product::find($sale->product_id)->name;            
+        }
+        return view('user.resumeSales', compact('sales','product'));
+
     }
 
 }

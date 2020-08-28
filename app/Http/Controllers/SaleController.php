@@ -36,8 +36,8 @@ class SaleController extends Controller
             $status[]=$sale->status;
             $buyers[]= User::find($sale->user_id)->name;            
         }
-        
-        return view('user.list-product-sales', compact('status','buyers'));
+        $slug = Product::find($product_id)->slug;
+        return view('user.list-product-sales', compact('status','buyers','slug'));
     }
 
 

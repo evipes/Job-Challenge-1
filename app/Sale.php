@@ -58,13 +58,14 @@ class Sale extends Model
         $sallesman = $product->user;
         $id = Auth::user()->id;
         $buyer = User::find($id);
-
+        $quantity = (int)$request->quantity;
+        $amount = $product->amount * $quantity;
         $status = 'approved';
         $sale = Sale::create([
-            'amount'=>$product->amount,
-            'quantity'=>1,
+            'amount'=>$amount,
+            'quantity'=>$request->quantity,
             'status'=>$status,
-            'installments'=>1,
+            'installments'=>$request->installments,
             'product_id'=>$product->id,
             'user_id'=>$id,
         ]);

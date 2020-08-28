@@ -23,7 +23,7 @@ Area de acesso a endedores cadastrados
     @foreach($products as $product)
         <li class="list-group-item d-flex justify-content-between align-items-center">
         <span id="product-name-{{$product->id}}">{{$product->name}}</span>
-        <span id="product-slug-{{$product->id}}">({{url($product->slug)}} )</span>
+      
 
          <!-- Icones de cada Produto -->
             <span class="d-flex">

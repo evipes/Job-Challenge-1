@@ -72,6 +72,22 @@
                     </div>
                   </div>
                   <br><hr><br>
+                  <h4>2. Informações da compra</h4>
+                  <br>
+                  <div class="mb-3 row">
+                      <label for="quantity" class="col-sm-3 col-form-label">Quantidade</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="quantity" name="quantity">
+                      </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <label for="installments" class="col-sm-3 col-form-label">Parcelas</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="installments" name="installments">
+                      </div>
+                    </div>
+                    <br><hr><br>
+
                   <h4>2. Dados de pagamento</h4>
                   <br>
                   <div class="mb-3 row">

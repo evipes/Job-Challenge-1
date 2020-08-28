@@ -86,7 +86,6 @@ class Product extends Model
      */
     public static function listProduct(int $user_id)
     {
-
         $user = User::find($user_id);
         $products=$user->products->All();
 
@@ -136,7 +135,6 @@ class Product extends Model
         $user = User::find($user_id);
         $products = $user->products->where('sold','>',0)->all();
         return $products;
-    
     }
 
 }

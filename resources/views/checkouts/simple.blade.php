@@ -144,3 +144,8 @@
     </div>
 </div>
 @endsection
+
+@section('script')
+<script src="{{ URL::asset('assets/js/checkouts/sale.js')}}"></script>
+
+@endsection

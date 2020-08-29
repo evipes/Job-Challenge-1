@@ -22,10 +22,8 @@ class CheckoutController extends Controller
      * @param   \App\Product
      * @return  \Illuminate\View\View
      */
-    public function index($id_product)
+    public function index(Product $product)
     {
-        $product=Product::where('slug',$id_product)->get()[0];
-
-        return view('checkouts.simple', compact('product'));
-    }  
+        return view('checkouts.simple',compact('product'));
+    }
 }

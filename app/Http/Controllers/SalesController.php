@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 class SalesController extends Controller
 {
 
+
+    public function first_sale(Request $request){
+        dd($request);
+    }
+
     public function list_vendas()
     {
 

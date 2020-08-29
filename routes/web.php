@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
 // Rota da página inicial
 Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
@@ -39,5 +40,31 @@ Route::get('/painel-cliente', ['as' => 'painel-cliente', 'uses' => 'PainelContro
 Route::get('/list-compras', ['as' => 'list-compras', 'uses' => 'SalesController@list_compras'])->middleware('role:cliente');
 
 // Rota para exibir página de vendas
-Route::get('/checkout/{product?}', 'CheckoutController@index');
+Route::get('/checkout/{product:slug}',['as' => 'checkout.sales', 'uses' => 'CheckoutController@index']);
+
+Route::post('/checkout/sales', ['as' => 'checkout.sales', 'uses' => 'SalesController@first_sale']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

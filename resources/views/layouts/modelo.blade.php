@@ -7,6 +7,8 @@
 
     <title>Evipes</title>
 
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -36,18 +38,28 @@
                 <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
             </li>
             @else
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                    <i class="fe-log-out"></i>
-                    {{ __('Sair') }}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- Exibindo somente o primiero nome -->
+                    {{ strstr(Auth::user()->name, ' ',true) }}
                 </a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                    <!-- Caso seja um vendedor as rotas para os paineis são diferentes -->
+                    @role('vendedor')
+                    <a class="dropdown-item" href="{{ route('painel-vendedor')}}">Meu painel</a>
+                    @endrole
+                    @role('cliente')
+                    <a class="dropdown-item" href="{{ route('painel-cliente')}}">Meu painel</a>
+                    @endrole
+                    <div class="dropdown-divider"></div>
+                    <!-- Link para deslogar caso esteja logado -->
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fe-log-out"></i>
+                        {{ __('Sair') }}
+                    </a>
+                </div>
             </li>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -55,59 +67,12 @@
             @endguest
         </ul>
     </nav>
-    <!-- Navbar -->
-    <!-- Tabelas -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <h1>Produtos</h1>
-                    <div class="float-right">
-                        <button type="button" id="btn-adicionar" class="btn btn-primary">
-                            Adicionar</button>
-                    </div>
-                    <!-- Tabela de produtos -->
-                    <table class="table" id="table-products">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <!-- Tabela de produtos -->
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <h1>Vendas</h1>
-                    <!-- Tabela de produtos -->
-                    <table class="table" id="table-sales">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Identificador</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <!-- Tabela de produtos -->
-                    </table>
-                </div>
-            </div>
-        </div>
+
+    <div id="app">
+        <main >
+            @yield('content')
+        </main>
     </div>
-    <!-- Modal de produto -->
-    @include('modais.produto')
 
 
 </body>
@@ -125,10 +90,7 @@
 <!-- Script icons -->
 <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 
-<!-- Script produto -->
-<script src="{{ URL::asset('assets/js/painel_vendedor/produto.js')}}"></script>
+@yield('script')
 
-<!-- Script vendas -->
-<script src="{{ URL::asset('assets/js/painel_vendedor/vendas.js')}}"></script>
 
 </html>

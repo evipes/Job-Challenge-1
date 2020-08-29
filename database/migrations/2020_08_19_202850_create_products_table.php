@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->comment('Nome do produto, informado pelo vendedor.');
             $table->decimal('amount', 10, 2)->comment('Valor do produto em reais.');
             $table->unsignedBigInteger('user_id')->index()->comment('ID referente ao usuário dono do produto.');
+            $table->softDeletes();
             $table->timestamps();
 
             # Chaves estrangeiras

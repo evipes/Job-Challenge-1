@@ -8,6 +8,11 @@ class PainelController extends Controller
 {
     public function vendedor()
     {
-        return view('painel-vendedor');
+        return view('paineis.painel-vendedor');
+    }
+
+    public function cliente()
+    {
+        return view('paineis.painel-cliente');
     }
 }

@@ -77,6 +77,10 @@ $(document).ready(function($) {
         });
     }).draw();
 
+    // máscara para o input de valor
+    $('#amount').mask('###0.00', { reverse: true });
+
+
     // Exibindo modal para adicionar produto
     $(document).on('click', '#btn-adicionar', function() {
         // Limpando Form

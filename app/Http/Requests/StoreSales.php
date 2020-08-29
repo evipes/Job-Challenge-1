@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class StoreSales extends FormRequest
 {
@@ -23,6 +25,8 @@ class StoreSales extends FormRequest
      *
      * @return array
      */
+
+    //  Caso seja a primeira compra esses são os campos requeridos
     private function rules()
     {
         return [
@@ -35,7 +39,17 @@ class StoreSales extends FormRequest
             'street_name' => ['required', 'string', 'max:255'],
             'street_number' => ['required', 'numeric'],
             'cardnumber' => ['required', 'numeric'],
-            'carddate' => ['required', 'numeric'],
+            'carddate' => ['required', 'date'],
+            'cardcvv' => ['required', 'numeric'],
+        ];
+    }
+
+    // Caso o usuário esteja logado essas serão os campos requeridos
+    private function rules_check()
+    {
+        return [
+            'cardnumber' => ['nullable', 'numeric'],
+            'carddate' => ['required', 'date'],
             'cardcvv' => ['required', 'numeric'],
         ];
     }
@@ -44,6 +58,7 @@ class StoreSales extends FormRequest
     {
         return [
             'name' => 'nome',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'amount' => 'valor',
             'state' => 'estado',
             'city' => 'cidade',
@@ -51,7 +66,7 @@ class StoreSales extends FormRequest
             'street_number' => 'carddate',
             'cardnumber' => 'numero do cartão',
             'carddate' => 'validade',
-            'cardcvv'=>'CVV',
+            'cardcvv' => 'CVV',
             'password' => 'Senha'
         ];
     }
@@ -60,7 +75,29 @@ class StoreSales extends FormRequest
     //método que valida as entradas
     public function validator(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules(), [], $this->attributeNames());
+        // Caso seja autenticado
+        if (Auth::check()) {
+            $validator = Validator::make($request->all(), $this->rules_check(), [], $this->attributeNames());
+
+            //Validações personalizadas
+            $validator->after(function ($validator) use ($request) {
+                // Simulando validacao de cartão
+                if (strlen($request->cardnumber) != 16)
+                    $validator->errors()->add('cardnumber', 'O cartão é inválido!');
+
+                // verificando se o código do produto digitado é válido
+                $product = Product::where('slug', $request->slug)->first();
+                if ($product == null) {
+                    $validator->errors()->add('slug', 'Digite um código válido!');
+                }
+            });
+        }
+
+        // Caso o usuário não esteja logado
+        else {
+            $validator = Validator::make($request->all(), $this->rules(), [], $this->attributeNames());
+        }
+
 
         //Validações personalizadas
         $validator->after(function ($validator) use ($request) {

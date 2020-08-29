@@ -1,16 +1,18 @@
 $(document).ready(function($) {
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+
     // Configuração Datatables Produto
     var tabela = $('#table-sales').DataTable({
         processing: true,
         serverSide: true,
         deferRender: true,
-        ajax: './list-vendas',
+        ajax: './list-compras',
         type: 'get',
         columns: [
             { data: 'id', name: 'order' },
@@ -75,5 +77,14 @@ $(document).ready(function($) {
             cell.innerHTML = tabela.page.info().page * tabela.page.info().length + i + 1;
         });
     }).draw();
+
+
+    $(document).on('click', '#btn-comprar', function() {
+        // Limpando Form
+        $("#form-compra")[0].reset();
+        // Mudando título do modal
+        $('#modal-title').text("Comprar Produto");
+        $("#modal-compra").modal('show');
+    })
 
 });

@@ -12,69 +12,35 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSales;
 use App\Sale;
 use Illuminate\Support\Facades\Auth;
+
 class SalesController extends Controller
 {
 
-    public function list()
+    public function list_vendas()
     {
-        $sales = Sale::where('user_id',Auth::user()->id)->get();
+
+        //Selecionando todas as vendas que o usuário logado fez 
+        $sales = DB::table('sales')
+            ->join('products', 'sales.product_id', '=', 'products.id')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->select('users.id', 'products.name', 'sales.amount', 'sales.status')->where('users.id', Auth::user()->id)
+            ->get();
         return datatables()->of($sales)
             ->escapeColumns([0])
             ->make(true);
     }
 
-    public function adicionar(Request $request, StoreSales $validatorSales)
+
+
+    public function list_compras()
     {
-
-        $validatedData = $validatorSales->validator($request);
-
-        if (is_array($validatedData))
-            if (count($validatedData))
-                return response($validatedData, 422);
-
-        // Realizando cadastro do usuário caso seja novo
-        try {
-            DB::beginTransaction();
-            // criando novo usuário
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = $request->password;
-            $user->save();
-
-            // Associando ao endereço
-            $addresses = new UserAddress();
-            $addresses->street_name = $request->street_name;
-            $addresses->street_number = $request->street_number;
-            $addresses->complement = $request->complement;
-            $addresses->neighborhood = $request->neighborhood;
-            $addresses->city = $request->city;
-            $addresses->state = $request->state;
-            $addresses->user_id = $user->id;
-            $addresses->save();
-
-
-            // Associandoo aos documentos
-            $documents = new UserDocuments();
-            $documents->type = $request->type;
-            $documents->number = $request->number;
-            $documents->user_id = $user->id;
-            $documents->save();
-
-            // Registrando compra
-            $sale = new Sale();
-            $sale->amount = $request->amount;
-            $sale->quantity = $request->quantity;
-            $sale->status = $request->status;
-            $sale->product_id = $request->product_id;
-            $sale->user_id = $user->id;
-            $sale->save();
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response([
-                'message' => 'Não foi possível realizar sua compra, favor entrar em contato com o nosso suporte'
-            ], 500);
-        }
+        // Selecionando todas as compras que o usuário logado realizou
+        $sales = DB::table('sales')
+            ->join('products', 'sales.product_id', '=', 'products.id')
+            ->select('sales.user_id', 'products.name',  'sales.amount', 'sales.status', 'products.id')->where('sales.user_id', Auth::user()->id)
+            ->get();
+        return datatables()->of($sales)
+            ->escapeColumns([0])
+            ->make(true);
     }
 }

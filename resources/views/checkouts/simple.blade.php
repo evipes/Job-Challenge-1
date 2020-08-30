@@ -83,7 +83,7 @@
                                      <!-- complemento -->
                                      <div class="form-group">
                                         <label for="complement">Complemento</label>
-                                        <input type="text" class="form-control" placeholder="Número da sua casa" name="complement" id="complement">
+                                        <input type="text" class="form-control" placeholder="Informação adicional" name="complement" id="complement">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

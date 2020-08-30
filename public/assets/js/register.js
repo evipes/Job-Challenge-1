@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    let base_url = location.protocol + '//' + window.location.host.toString();
+
     //mascara cnpj
     function mask_cnpj() {
         // Alterando texto da label
@@ -49,7 +51,7 @@ $(document).ready(function() {
     mask_cpf();
 
 
-    $(document).on('submit', '#form-register', function(e) {
+    $(document).on('click', '#btn-cadastrar', function(e) {
         e.preventDefault();
         dados = new FormData($("#form-register")[0]);
         $.ajax({
@@ -58,18 +60,34 @@ $(document).ready(function() {
             data: dados,
             processData: false,
             contentType: false,
+            success: function(data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cadastro efetuado com sucesso!',
+                    showConfirmButton: true,
+                });
+                window.location.href = base_url;
+            },
             error: function(data) {
                 if (data.status === 400) {
-                    var error = data.responseJSON.erros;
-                    //Manipular mensagens na tela
+                    var error = data.responseJSON.errors;
+                    var html = '';
+                    //Manipular mensagens de erro na tela
                     for (var indice in error) {
-                        $("[name='" + indice + "']").addClass('is-invalid');
-                        $("div." + indice).text(error[indice][0])
+                        html += error[indice][0] + "<br>";
                     }
+                    if (html !== '')
+                        Swal.fire({
+                            title: "erro",
+                            icon: 'error',
+                            html: html,
+                            showConfirmButton: false,
+                        });
                 } else {
+                    // mensagem caso não seja erro interno
                     Swal.fire({
                         icon: 'error',
-                        title: 'Erro interno, entre em contato com o suporte!',
+                        title: 'Favor entrar em contato com o suporte.!',
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -77,7 +95,4 @@ $(document).ready(function() {
             }
         });
     })
-
-
-
 });

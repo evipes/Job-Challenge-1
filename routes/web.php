@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
-
+Auth::routes(['register' => false]);
 
 
 // Rota para exibir página de vendas
-Route::get('/checkout/{product}',['as' => 'checkout.{product}', 'uses' => 'CheckoutController@index']);
+Route::get('/checkout/{product}', ['as' => 'checkout.{product}', 'uses' => 'CheckoutController@index']);
 
 
 // Rota da página inicial
@@ -47,30 +46,8 @@ Route::get('/list-compras', ['as' => 'list-compras', 'uses' => 'SalesController@
 // Tota de compra
 Route::post('/checkout/store', ['as' => 'checkout.store', 'uses' => 'CheckoutController@store']);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Rota register
+Route::group(['prefix' => 'register'], function () {
+    Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
+    Route::post('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@register']);
+});

@@ -12,11 +12,13 @@ use Illuminate\Support\Facades\Hash;
 use App\UserAddress;
 use App\UserDocuments;
 use App\Sale;
+use App\Notifications\Inform;
 
 class CheckoutController extends Controller
 {
     function index($product)
     {
+        // Retornando view de checkout dependendo se for a primeira compra ou se já for um cliente 
         $product = Product::where('slug', $product)->first();
         if (Auth::check() && Auth::user()->hasRole('cliente')) {
             return view('checkouts.auth', compact('product'));
@@ -74,6 +76,14 @@ class CheckoutController extends Controller
             $sale->product_id = $request->product_id;
             $sale->user_id = isset($user->id) ? $user->id : Auth::user()->id;
             $sale->save();
+            // enviando email sobre a compra feita
+            $user->notify(new Inform(
+                $user,
+                $subject = "Compra na Evipes",
+                $text = "Você acabou de fazer uma compra em nossa plataforma! Parabéns como isso
+            você terá vários benefícios, alguns deles são: transação seguras, garantia de recebimento
+            e muito mais!! Continue usando a nossa plataforma para realizar compas"
+            ));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

@@ -5,7 +5,7 @@ $(document).ready(function($) {
         }
     });
 
-    // Configuração Datatables Produto
+    // Configuração Datatables de vendas
     var tabela = $('#table-sales').DataTable({
         processing: true,
         serverSide: true,

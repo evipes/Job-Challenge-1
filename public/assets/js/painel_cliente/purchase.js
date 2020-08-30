@@ -77,14 +77,4 @@ $(document).ready(function($) {
             cell.innerHTML = tabela.page.info().page * tabela.page.info().length + i + 1;
         });
     }).draw();
-
-
-    $(document).on('click', '#btn-comprar', function() {
-        // Limpando Form
-        $("#form-compra")[0].reset();
-        // Mudando título do modal
-        $('#modal-title').text("Comprar Produto");
-        $("#modal-compra").modal('show');
-    })
-
 });

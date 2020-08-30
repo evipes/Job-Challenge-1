@@ -205,7 +205,6 @@ $(document).ready(function($) {
             },
             error: function(data) {
                 // Verificando se existe erros quanto ao preenchimento do form
-
                 if (data.responseJSON.hasOwnProperty('errors')) {
                     var error = data.responseJSON.errors;
                     var html = '';

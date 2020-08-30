@@ -41,8 +41,8 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!-- Exibindo somente o primiero nome -->
-                    {{ strstr(Auth::user()->name, ' ',true) }}
+                    <!-- Exibindo o nome -->
+                    {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu " aria-labelledby="navbarDropdown">
                     <!-- Caso seja um vendedor as rotas para os paineis são diferentes -->
@@ -86,9 +86,6 @@
 
 <!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-<!-- Script icons -->
-<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 
 @yield('script')
 

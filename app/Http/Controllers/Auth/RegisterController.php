@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\UserDocuments;
 use App\Notifications\Inform;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Response;
 
 
 class RegisterController extends Controller
@@ -35,7 +38,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-      
+
         return '/';
     }
     /**
@@ -56,7 +59,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $validator = Validator::make($data, [
+        return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -64,9 +67,9 @@ class RegisterController extends Controller
             'cnpj' => ['nullable', Rule::requiredIf($data['type'] == 'cnpj'), 'cnpj'],
 
         ]);
-
-        return $validator;
     }
+
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -76,36 +79,64 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
-        // Criando usuário
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            DB::beginTransaction();
+            // Criando usuário
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
 
-        // Criando documentos e relacionando-os com o usuário criado
-        UserDocuments::create([
-            'type' => $data['type'],
-            'number' => isset($data['cpf']) ? $data['cpf'] : $data['cnpj'],
-            'user_id' => $user->id,
-        ]);
+            // Criando documentos e relacionando-os com o usuário criado
+            UserDocuments::create([
+                'type' => $data['type'],
+                'number' => isset($data['cpf']) ? $data['cpf'] : $data['cnpj'],
+                'user_id' => $user->id,
+            ]);
 
-        // Definindo papel do usuário
-        $user->assignRole('vendedor');
-
-        // enviando email de boas vindas para o novo usuário
-        $user->notify(new Inform(
-            $user,
-            $subject="Inscrição na Evipes",
-            $text="Você acabou de se inscrever para poder trabalhar usando nossa plataforma! Parabéns como isso
+            // Definindo papel do usuário
+            $user->assignRole('vendedor');
+            DB::commit();
+            
+            // enviando email de boas vindas para o novo usuário
+            $user->notify(new Inform(
+                $user,
+                $subject = "Inscrição na Evipes",
+                $text = "Você acabou de se inscrever para poder trabalhar usando nossa plataforma! Parabéns como isso
             você terá vários benefícios, alguns deles são: transações seguras, aumento do número de vendas
             e muitos outros!!"
-        ));
-        // Retornando usuário
-        return $user;
+            ));
+            // Retornando usuário
+            return $user;
+        } catch (\Exception $e) {
+            return response()->json(['error_login', "Erro ao realizar cadastro! Favor entrar em contato com o nosso suporte."]);
+            DB::rollBack();
+        }
     }
 
+
+
+    // Recriando rota register
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            // Retornando erros 
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()), 400);
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+    }
+
+    // Função para retornar a view register
     public function showRegistrationForm($codigo = '')
     {
         return view('auth.register');

@@ -44,11 +44,11 @@ class StoreSales extends FormRequest
         ];
     }
 
-    // Caso o usuário esteja logado essas serão os campos requeridos
-    private function rules_check()
+    private function rulesAuth()
     {
         return [
-            'cardnumber' => ['nullable', 'numeric'],
+            'installments' => ['required', 'numeric'],
+            'cardnumber' => ['required', 'numeric'],
             'carddate' => ['required', 'date'],
             'cardcvv' => ['required', 'numeric'],
         ];
@@ -64,6 +64,8 @@ class StoreSales extends FormRequest
             'city' => 'cidade',
             'street_name' => 'rua',
             'street_number' => 'carddate',
+            'installments' => ['required', 'numeric'],
+            'complement' => ['nullable','text'],
             'cardnumber' => 'numero do cartão',
             'carddate' => 'validade',
             'cardcvv' => 'CVV',
@@ -72,32 +74,14 @@ class StoreSales extends FormRequest
     }
 
 
-    //método que valida as entradas
+    //método que valida as entradas 
     public function validator(Request $request)
     {
-        // Caso seja autenticado
         if (Auth::check()) {
-            $validator = Validator::make($request->all(), $this->rules_check(), [], $this->attributeNames());
-
-            //Validações personalizadas
-            $validator->after(function ($validator) use ($request) {
-                // Simulando validacao de cartão
-                if (strlen($request->cardnumber) != 16)
-                    $validator->errors()->add('cardnumber', 'O cartão é inválido!');
-
-                // verificando se o código do produto digitado é válido
-                $product = Product::where('slug', $request->slug)->first();
-                if ($product == null) {
-                    $validator->errors()->add('slug', 'Digite um código válido!');
-                }
-            });
+            $validator = Validator::make($request->all(), $this->rulesAuth(),  $this->attributeNames());
+        } else {
+            $validator = Validator::make($request->all(), $this->rules(),  $this->attributeNames());
         }
-
-        // Caso o usuário não esteja logado
-        else {
-            $validator = Validator::make($request->all(), $this->rules(), [], $this->attributeNames());
-        }
-
 
         //Validações personalizadas
         $validator->after(function ($validator) use ($request) {

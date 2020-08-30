@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\UserDocuments;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
+use App\Notifications\Inform;
 
 
 class RegisterController extends Controller
@@ -34,8 +33,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
+    protected function redirectTo()
+    {
+      
+        return '/';
+    }
     /**
      * Create a new controller instance.
      *
@@ -60,7 +62,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'cpf' => ['nullable', Rule::requiredIf($data['type'] == 'cpf'), 'cpf'],
             'cnpj' => ['nullable', Rule::requiredIf($data['type'] == 'cnpj'), 'cnpj'],
-           
+
         ]);
 
         return $validator;
@@ -74,6 +76,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         // Criando usuário
         $user = User::create([
             'name' => $data['name'],
@@ -87,15 +90,24 @@ class RegisterController extends Controller
             'number' => isset($data['cpf']) ? $data['cpf'] : $data['cnpj'],
             'user_id' => $user->id,
         ]);
-     
-            // Definindo papel do usuário
-            $user->assignRole('vendedor');
-            // Retornando usuário
-            return $user;
-        
+
+        // Definindo papel do usuário
+        $user->assignRole('vendedor');
+
+        // enviando email de boas vindas para o novo usuário
+        $user->notify(new Inform(
+            $user,
+            $subject="Inscrição na Evipes",
+            $text="Você acabou de se inscrever para poder trabalhar usando nossa plataforma! Parabéns como isso
+            você terá vários benefícios, alguns deles são: transações seguras, aumento do número de vendas
+            e muitos outros!!"
+        ));
+        // Retornando usuário
+        return $user;
     }
-    
-    public function showRegistrationForm($codigo=''){
+
+    public function showRegistrationForm($codigo = '')
+    {
         return view('auth.register');
-    }   
+    }
 }

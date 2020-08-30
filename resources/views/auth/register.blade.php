@@ -6,7 +6,7 @@
         <div class="col-lg-6 col-md-8 ">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" id="form-register">
                         @csrf
                         <div class="row justify-content-center">
                             <a href="{{route('home')}}">
@@ -50,9 +50,8 @@
 
                             <div class="form-group row col-lg-12">
                                 <div class="col-md-12">
-                                    <label for="cpf" id="cpf_cnpj_label" class="col-form-label  text-md-right"></label>
-
-                                    <input id="cpf_cnpj" type="text" required placeholder="000.000.000-00" class="form-control @error('cpf') is-invalid @enderror @error('cnpj') is-invalid @enderror " value="{{ old('cpf') }}" name="cpf">
+                                    <label for="cpf" id="cpf-cnpj-label" class="col-form-label  text-md-right"></label>
+                                    <input id="cpf-cnpj" type="text" required placeholder="000.000.000-00" class="form-control @error('cpf') is-invalid @enderror @error('cnpj') is-invalid @enderror " value="{{ old('cpf') }}" name="cpf">
                                     @error('cpf')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

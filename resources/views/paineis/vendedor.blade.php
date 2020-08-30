@@ -53,15 +53,15 @@
     </div>
 </div>
 <!-- Modal de produto -->
-@include('modais.produto')
+@include('modais.product')
 @endsection
 
 @section('script')
 <!-- sjquery mask -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <!-- Script produto -->
-<script src="{{ URL::asset('assets/js/painel_vendedor/produto.js')}}"></script>
+<script src="{{ URL::asset('assets/js/painel_vendedor/product.js')}}"></script>
 
 <!-- Script vendas -->
-<script src="{{ URL::asset('assets/js/painel_vendedor/vendas.js')}}"></script>
+<script src="{{ URL::asset('assets/js/painel_vendedor/sales.js')}}"></script>
 @endsection

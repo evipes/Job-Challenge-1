@@ -17,19 +17,15 @@ class SalesController extends Controller
 {
 
 
-    public function first_sale(Request $request){
-        dd($request);
-    }
-
     public function list_vendas()
     {
-
         //Selecionando todas as vendas que o usuário logado fez 
         $sales = DB::table('sales')
             ->join('products', 'sales.product_id', '=', 'products.id')
             ->join('users', 'products.user_id', '=', 'users.id')
             ->select('users.id', 'products.name', 'sales.amount', 'sales.status')->where('users.id', Auth::user()->id)
             ->get();
+        // Retornando os dados consultados
         return datatables()->of($sales)
             ->escapeColumns([0])
             ->make(true);
@@ -44,6 +40,7 @@ class SalesController extends Controller
             ->join('products', 'sales.product_id', '=', 'products.id')
             ->select('sales.user_id', 'products.name',  'sales.amount', 'sales.status', 'products.id')->where('sales.user_id', Auth::user()->id)
             ->get();
+        // Retornando os dados consultados
         return datatables()->of($sales)
             ->escapeColumns([0])
             ->make(true);

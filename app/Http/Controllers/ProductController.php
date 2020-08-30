@@ -8,7 +8,6 @@ use App\Product;
 use App\Http\Requests\StoreProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use DataTables;
 
 class ProductController extends Controller
 {
@@ -26,7 +25,7 @@ class ProductController extends Controller
     }
 
     // Listar produtos
-    public function list()
+    public function index()
     {
         $product = Product::where('user_id',Auth::user()->id)->get();
         return datatables()->of($product)
@@ -38,7 +37,7 @@ class ProductController extends Controller
     }
 
     // Adicionar produtos
-    public function adicionar(Request $request, StoreProduct $validatorProduct)
+    public function store(Request $request, StoreProduct $validatorProduct)
     {
 
         $validatedData = $validatorProduct->validator($request);
@@ -66,7 +65,7 @@ class ProductController extends Controller
     }
 
     // Editar produtos
-    public function edit(Request $request, StoreProduct $validatorProduct)
+    public function update(Request $request, StoreProduct $validatorProduct)
     {
         $validatedData = $validatorProduct->validator($request);
 
@@ -92,7 +91,7 @@ class ProductController extends Controller
     }
 
     // Apagando produto
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         $product = Product::find($request->id);
         $product->Delete();

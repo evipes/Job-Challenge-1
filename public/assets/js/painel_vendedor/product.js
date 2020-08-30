@@ -10,7 +10,7 @@ $(document).ready(function($) {
         processing: true,
         serverSide: true,
         deferRender: true,
-        ajax: './product/list',
+        ajax: './product/index',
         type: 'get',
         columns: [
             { data: 'id', name: 'order' },
@@ -155,7 +155,7 @@ $(document).ready(function($) {
             if (result.value) {
                 $.ajax({
                     type: 'post',
-                    url: './product/delete',
+                    url: './product/destroy',
                     data: dados,
                     processData: false,
                     contentType: false,
@@ -186,7 +186,7 @@ $(document).ready(function($) {
         let dados = new FormData($("#form-product")[0]);
         $.ajax({
             type: 'post',
-            url: './product/adicionar',
+            url: './product/store',
             data: dados,
             processData: false,
             contentType: false,
@@ -241,7 +241,7 @@ $(document).ready(function($) {
         let dados = new FormData($("#form-product")[0]);
         $.ajax({
             type: 'post',
-            url: './product/edit',
+            url: './product/update',
             data: dados,
             processData: false,
             contentType: false,

@@ -16,15 +16,20 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
+
+// Rota para exibir página de vendas
+Route::get('/checkout/{product}',['as' => 'checkout.{product}', 'uses' => 'CheckoutController@index']);
+
+
 // Rota da página inicial
 Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
 // Rota do CRUD produtos
 Route::group(['prefix' => 'product', 'middleware' => ['role:vendedor']], function () {
-    Route::get('/list', ['as' => 'product.list', 'uses' => 'ProductController@list']);
-    Route::post('/adicionar', ['as' => 'product.adicionar', 'uses' => 'ProductController@adicionar']);
-    Route::post('/edit', ['as' => 'product.edit', 'uses' => 'ProductController@edit']);
-    Route::post('/delete', ['as' => 'product.delete', 'uses' => 'ProductController@delete']);
+    Route::get('/index', ['as' => 'product.index', 'uses' => 'ProductController@index']);
+    Route::post('/store', ['as' => 'product.store', 'uses' => 'ProductController@store']);
+    Route::post('/update', ['as' => 'product.update', 'uses' => 'ProductController@update']);
+    Route::post('/destroy', ['as' => 'product.destroy', 'uses' => 'ProductController@destroy']);
 });
 
 // Rota para listar vendas
@@ -39,10 +44,11 @@ Route::get('/painel-cliente', ['as' => 'painel-cliente', 'uses' => 'PainelContro
 // Rota para listar compras
 Route::get('/list-compras', ['as' => 'list-compras', 'uses' => 'SalesController@list_compras'])->middleware('role:cliente');
 
-// Rota para exibir página de vendas
-Route::get('/checkout/{product:slug}',['as' => 'checkout.sales', 'uses' => 'CheckoutController@index']);
+// Tota de compra
+Route::post('/checkout/store', ['as' => 'checkout.store', 'uses' => 'CheckoutController@store']);
 
-Route::post('/checkout/sales', ['as' => 'checkout.sales', 'uses' => 'SalesController@first_sale']);
+
+
 
 
 

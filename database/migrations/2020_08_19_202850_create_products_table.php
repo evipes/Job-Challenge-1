@@ -18,11 +18,11 @@ class CreateProductsTable extends Migration
             $table->string('slug')->index()->comment('Código do produto, pelo qual será procurado.');
             $table->string('name')->comment('Nome do produto, informado pelo vendedor.');
             $table->decimal('amount', 10, 2)->comment('Valor do produto em reais.');
-            $table->unsignedBigInteger('user_id')->index()->comment('ID referente ao usuário dono do produto.');
+            $table->unsignedBigInteger('vendor_id')->index()->comment('ID referente ao usuário dono do produto.');
             $table->timestamps();
 
             # Chaves estrangeiras
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('vendor_id')->references('id')->on('vendors');
         });
     }
 

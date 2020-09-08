@@ -20,12 +20,12 @@ class CreateSalesTable extends Migration
             $table->enum('status', ['approved', 'rejected', 'pending'])->comment('Status do pagamento da transação.');
             $table->integer('installments')->comment('Número de parcelas que o cliente escolheu pagar.');
             $table->unsignedBigInteger('product_id')->index()->comment('ID referente à tabela de produtos.');
-            $table->unsignedBigInteger('user_id')->index()->comment('ID referente à tabela de usuários. Usuário quem comprou.');
+            $table->unsignedBigInteger('client_id')->index()->comment('ID referente à tabela de usuários. Usuário quem comprou.');
             $table->timestamps();
 
             # Chaves estrangeiras
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 

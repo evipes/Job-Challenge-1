@@ -12,9 +12,25 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['verify' => true]);
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/products', 'ProductsController@index')->name('products');
+
+// ROTAS CLIENTE
+Route::group(['namespace' => 'Client', ], function()
+{
+    // ÁREA PROTEGIDA
+    Route::group(['prefix' => 'cliente', 'as' => 'client.', 'middleware' => 'auth:client'], function () {
+       Route::get('/', 'ClientController@index')->name('dash');
+    });
 });
 
-Route::get('/checkout/{product:slug}', 'CheckoutController@index');
+// ROTAS VENDEDOR
+Route::group(['namespace' => 'Vendor', 'prefix' => 'vendedor',  'as' => 'vendor.'], function()
+{
+    // ÁREA PROTEGIDA
+    Route::group(['middleware' => 'auth:vendor'], function () {
+        Route::get('/', 'VendorController@index')->name('dash');
+    });
+});

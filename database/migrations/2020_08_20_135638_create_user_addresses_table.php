@@ -8,7 +8,7 @@ class CreateUserAddressesTable extends Migration
 {
     /**
      * Lista de estados do Brasil
-     * 
+     *
      * @var array
      */
     private array $statesAllowed = [
@@ -30,17 +30,14 @@ class CreateUserAddressesTable extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
+            $table->morphs('addressable');
             $table->string('street_name')->comment('Nome da rua');
             $table->string('street_number', 10)->default('S/N')->comment('Número da casa');
             $table->string('complement')->nullable()->comment('Complemento da casa');
             $table->string('neighborhood')->comment('Bairro do endereço');
             $table->string('city')->comment('Nome da cidade do endereço');
             $table->enum('state', $this->statesAllowed)->comment('Sigla de dois dígitos referente ao ');
-            $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
-
-            # Chaves estrangeiras
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
